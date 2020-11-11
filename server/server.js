@@ -25,7 +25,10 @@ const LessonControl = require('./Controllers/LessonControl');
 app.post('/api/lesson/create', LessonControl.create);
 app.get('/api/lesson/getall', LessonControl.findAll);
 app.get('/api/lesson/getone/:name', LessonControl.findByName);
-
+app.post('/api/lesson/addquestion/:name', LessonControl.addQuestionToLesson);
+app.get('/api/lesson/getquestion/:name/:id', LessonControl.getOneQuestion);
+app.post('/api/lesson/updatequestion/:name/:id', LessonControl.updateOneQuestion);
+app.post('/api/lesson/deletequestion/:name/:id', LessonControl.deleteQuestion);
 
 
 app.listen(3000, function () {

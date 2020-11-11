@@ -37,7 +37,7 @@ module.exports = {
       var lessonName = req.params.name;
       console.log(lessonName);
       const lesson = await LessonModel.findOne({ name: lessonName });
-
+      console.log(lesson)
       lesson.questions.push({
         supplement: req.body.supplement,
         body: req.body.body,
@@ -67,7 +67,7 @@ module.exports = {
     try{
       var questionId = req.params.id;
       var lessonName = req.params.name;
-
+      console.log(questionId)
       const lesson = await LessonModel.findOne({ name: lessonName });
 
       lesson.questions[questionId] = {

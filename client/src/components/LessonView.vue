@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-list-item
-      v-for="(question, index) in questionList.questions"
+      v-for="(question, index) in questionList"
       v-bind:key="question.body"
       v-on:click="showQuestionDetails(index)"
     >
@@ -96,7 +96,7 @@ export default {
         },
       });
 
-      this.questionList.questions.push({
+      this.questionList.push({
         supplement: [],
         body: this.newQuestion,
         answer: this.newAnswer,
@@ -134,7 +134,7 @@ export default {
         },
       });
 
-      this.questionList.questions.splice(this.selectedQuestionIdx, 1, {
+      this.questionList.splice(this.selectedQuestionIdx, 1, {
         body: this.selectedQuestion.body,
         answer: this.selectedQuestion.answer,
         supplement: [],
@@ -151,7 +151,7 @@ export default {
           this.selectedQuestionIdx,
       });
 
-      this.questionList.questions.splice(this.selectedQuestionIdx, 1);
+      this.questionList.splice(this.selectedQuestionIdx, 1);
       this.dialogQuestionDetails = false;
     }
   },
@@ -161,8 +161,7 @@ export default {
     instance
       .get("/lesson/getone/" + name)
       .then((res) => {
-        this.questionList = res.data;
-        this.questionList.questions = [];
+        this.questionList = res.data.questions;
       })
       .catch((err) => {
         console.log(err);

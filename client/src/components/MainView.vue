@@ -2,10 +2,10 @@
   <v-container class="mainContainer" fluid>
     <v-list-item
       v-for="lesson in lessonList"
-      v-bind:key="lesson.name"
-      :to="{ name: 'lesson', params: { name: lesson.name } }"
+      v-bind:key="lesson"
+      :to="{ name: 'lesson', params: { name: lesson } }"
     >
-     {{lesson.name}}
+     {{lesson}}
     </v-list-item>
     <v-text-field
       v-show="showInputLesson"
@@ -44,18 +44,16 @@ export default {
       this.showInputLesson = true;
     },
     confirmAddLesson(lessonTitle) {
-      var lesson = new Lesson(lessonTitle, []);
-
       instance({
         method: 'post',
         url: '/lesson/create',
         data: {
-          name: lesson.title,
+          name: lessonTitle,
           questions: [],
         }
       })
 
-      this.lessonList.push(lesson);
+      this.lessonList.push(lessonTitle);
       this.showInputLesson = false;
       this.newLessonTitle = "";
     },
@@ -63,7 +61,7 @@ export default {
   mounted() {
    instance.get('/lesson/getall')
     .then(res => {
-    this.lessonList = res.data;
+    this.lessonList = res.data.map((x) => { return x.name } );
     })
     .catch(err => {
       console.log(err)

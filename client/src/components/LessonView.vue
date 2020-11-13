@@ -37,9 +37,7 @@
         <v-btn dark v-bind="attrs" v-on="on" fab>
           <v-icon> mdi-plus </v-icon>
         </v-btn>
-        <v-btn to="/">
-          Back to lesson
-        </v-btn>
+        <v-btn to="/"> Back to lesson </v-btn>
       </template>
       <v-card>
         <v-card-title> Add new question </v-card-title>
@@ -60,6 +58,9 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-btn fab :to="{ name: 'revision', params: { name: actualLesson } }">
+      <v-icon> mdi-play </v-icon>
+    </v-btn>
   </v-container>
 </template>
 
@@ -83,6 +84,7 @@ export default {
     selectedQuestion: {},
     questionIsSelect: false,
     questionUpdateMode: false,
+    actualLesson: "empty",
   }),
   methods: {
     saveNewQuestion() {
@@ -153,10 +155,11 @@ export default {
 
       this.questionList.splice(this.selectedQuestionIdx, 1);
       this.dialogQuestionDetails = false;
-    }
+    },
   },
   mounted() {
     var name = this.$route.params.name;
+    this.actualLesson = this.$route.params.name;
 
     instance
       .get("/lesson/getone/" + name)

@@ -1,20 +1,25 @@
 <template>
-  <v-container class="mainContainer">
+  <v-container>
     <vue-swing
       @throwoutleft="left"
       @throwoutright="right"
       @throwout="onThrowout"
+      class="vSwing"
     >
       <v-card
-        v-for="(idx, card) in cards"
+        v-for="card in cards"
         :key="card.title"
         elevation="10"
         outlined
-        class="card p-0"
+        class="card"
       >
-        <v-card-title > {{ card }} </v-card-title>
-        <v-card-text> okazpdokazpdokazpodkazpodkazpodkazpodkazpdokazpdokazpdokaz </v-card-text>
+        <v-card-title> {{ card.body }} </v-card-title>
+        <v-divider></v-divider>
+        <v-card-text>
+          {{ card.answer }}
+        </v-card-text>
       </v-card>
+      <v-btn to="/"> Back to lesson </v-btn>
     </vue-swing>
   </v-container>
 </template>
@@ -31,7 +36,7 @@ var instance = axios.create({
 export default {
   name: "RevisionView",
   data: () => ({
-    cards: ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"],
+    cards: [],
   }),
   methods: {
     right() {
@@ -41,12 +46,25 @@ export default {
       console.log("left");
     },
     onThrowout({ target, throwDirection }) {
-        var cardTitle = target.textContent.split(" ")[1];
-        var idx = this.cards.findIndex((el) => { el == cardTitle});
-        this.cards.splice(idx, 1);
-    }
+      var cardTitle = target.textContent.split(" ")[1];
+      var idx = this.cards.findIndex((el) => {
+        el == cardTitle;
+      });
+      this.cards.splice(idx, 1);
+    },
   },
-  mounted() {},
+  mounted() {
+    this.actualLesson = this.$route.params.name;
+
+    instance
+      .get("/lesson/getone/" + this.actualLesson)
+      .then((res) => {
+        this.cards = res.data.questions;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
   created() {},
 };
 </script>
@@ -58,4 +76,5 @@ export default {
 .card {
   position: absolute;
 }
+
 </style>

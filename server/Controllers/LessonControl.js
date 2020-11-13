@@ -35,6 +35,7 @@ module.exports = {
   addQuestionToLesson: async (req, res) => {
     try{
       var lessonName = req.params.name;
+      
       console.log(lessonName);
       const lesson = await LessonModel.findOne({ name: lessonName });
       console.log(lesson)

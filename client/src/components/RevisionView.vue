@@ -1,10 +1,10 @@
 <template>
-  <v-container>
+  <v-container class="mainContainer">
     <vue-swing
       @throwoutleft="left"
       @throwoutright="right"
       @throwout="onThrowout"
-      class="vSwing"
+      class="vswing"
     >
       <v-card
         v-for="card in cards"
@@ -12,6 +12,10 @@
         elevation="10"
         outlined
         class="card"
+        max-height="500"
+        max-width="300"
+        height="500"
+        width="300"
       >
         <v-card-title> {{ card.body }} </v-card-title>
         <v-divider></v-divider>
@@ -19,8 +23,8 @@
           {{ card.answer }}
         </v-card-text>
       </v-card>
-      <v-btn to="/"> Back to lesson </v-btn>
     </vue-swing>
+    <v-btn to="/"> Back to lesson </v-btn>
   </v-container>
 </template>
 
@@ -72,9 +76,12 @@ export default {
 <style scoped>
 .mainContainer {
   height: 100%;
+  position: relative;
 }
 .card {
   position: absolute;
+  top: 20%;
+  left: 10%;
 }
 
 </style>

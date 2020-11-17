@@ -1,0 +1,10 @@
+{
+    "name": "FlashCard",
+    "description": "Learn japan",
+    "keywords": ["node", "express", "static"],
+    "buildpacks": [
+        {
+          "url": "heroku/nodejs"
+        }
+      ]
+  }

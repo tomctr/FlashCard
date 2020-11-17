@@ -19,9 +19,11 @@
       >
         <v-card-title> {{ card.body }} </v-card-title>
         <v-divider></v-divider>
-        <v-card-text>
+        <div class="answerDiv" @click="showAnswer">
+        <v-card-text v-show="isAnswerShown" >
           {{ card.answer }}
         </v-card-text>
+        </div>
       </v-card>
     </vue-swing>
     <v-btn to="/"> Back to lesson </v-btn>
@@ -41,13 +43,19 @@ export default {
   name: "RevisionView",
   data: () => ({
     cards: [],
+    isAnswerShown: false,
+    correctAnswer: 0,
+    totalQuestion: 0,
   }),
   methods: {
+    showAnswer() {
+      this.isAnswerShown = !this.isAnswerShown
+    },
     right() {
-      console.log("right");
+      this.correctAnswer += 1;
     },
     left() {
-      console.log("left");
+      //to implement
     },
     onThrowout({ target, throwDirection }) {
       var cardTitle = target.textContent.split(" ")[1];
@@ -64,6 +72,7 @@ export default {
       .get("/lesson/getone/" + this.actualLesson)
       .then((res) => {
         this.cards = res.data.questions;
+        this.totalQuestion = this.cards.length;
       })
       .catch((err) => {
         console.log(err);
@@ -83,5 +92,7 @@ export default {
   top: 20%;
   left: 10%;
 }
-
+.answerDiv {
+  height: 85%;
+}
 </style>

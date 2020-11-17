@@ -31,6 +31,6 @@ app.post('/api/lesson/updatequestion/:name/:id', LessonControl.updateOneQuestion
 app.post('/api/lesson/deletequestion/:name/:id', LessonControl.deleteQuestion);
 
 
-app.listen(3000, function () {
+app.listen(process.env.PORT, function () {
   console.log('Example app listening on port 3000!')
 });

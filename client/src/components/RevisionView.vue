@@ -20,10 +20,25 @@
         <v-card-title> {{ card.body }} </v-card-title>
         <v-divider></v-divider>
         <div class="answerDiv" @click="showAnswer">
-        <v-card-text v-show="isAnswerShown" >
-          {{ card.answer }}
-        </v-card-text>
+          <v-card-text v-show="isAnswerShown">
+            {{ card.answer }}
+          </v-card-text>
         </div>
+      </v-card>
+      <v-card
+        class="card"
+        elevation="10"
+        outlined
+        max-height="500"
+        max-width="300"
+        height="500"
+        width="300"
+      >
+        <v-card-title> Revision Result </v-card-title>
+        <v-divider></v-divider>
+        <v-card-text>
+          {{correctAnswer}} / {{totalQuestion}} ({{getResultPercent()}}%)
+        </v-card-text>
       </v-card>
     </vue-swing>
     <v-btn to="/"> Back to lesson </v-btn>
@@ -49,7 +64,7 @@ export default {
   }),
   methods: {
     showAnswer() {
-      this.isAnswerShown = !this.isAnswerShown
+      this.isAnswerShown = !this.isAnswerShown;
     },
     right() {
       this.correctAnswer += 1;
@@ -64,6 +79,9 @@ export default {
       });
       this.cards.splice(idx, 1);
     },
+    getResultPercent() {
+      return (this.correctAnswer / this.totalQuestion) * 100
+    }
   },
   mounted() {
     this.actualLesson = this.$route.params.name;
